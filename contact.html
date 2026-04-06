@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>GR ASSOCIATES | Contact Us – Let's Build Together</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS (Animate on Scroll) Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fef8ed;
+            color: #1e2a47;
+            line-height: 1.5;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        :root {
+            --gold: #d4af37;
+            --gold-dark: #b28b2c;
+            --navy: #0a192f;
+            --cream: #fdf8ed;
+            --cream-dark: #f5efdf;
+            --gray-text: #4a5568;
+            --shadow-sm: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+            --shadow-md: 0 20px 30px -12px rgba(0,0,0,0.1);
+            --transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.15s ease-out;
+            backdrop-filter: blur(2px);
+        }
+        .cursor-dot.hover, .cursor-outline.hover {
+            transform: scale(1.5);
+            background-color: var(--gold-dark);
+            border-color: var(--gold-dark);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--cream-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        /* Navbar – light cream */
+        .navbar {
+            background: rgba(253, 248, 237, 0.96);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 0.8rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(253, 248, 237, 0.98);
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+        .logo-img {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .logo-img:hover {
+            transform: scale(1.02);
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .logo-main {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .logo-main .gr {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo-main .associates {
+            color: var(--navy);
+        }
+        .logo-tagline {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--navy);
+            text-transform: uppercase;
+            margin-top: 2px;
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            font-weight: 500;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--navy);
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+            position: relative;
+        }
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover:after,
+        .nav-links a.active:after {
+            width: 100%;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--navy);
+        }
+
+        .btn-primary {
+            background: linear-gradient(105deg, var(--gold), var(--gold-dark));
+            color: var(--navy);
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Hero Section – Full-screen (100vh) with contact details inside */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: radial-gradient(circle at 30% 20%, #0f2a44, #030c17);
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2), transparent);
+            filter: blur(60px);
+            animation: float 14s infinite alternate;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            100% { transform: translate(30px, -30px) scale(1.2); opacity: 0.7; }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 6rem 1rem;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff, var(--gold), #ffdf8c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #e0d6c0;
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+        /* Contact info row inside hero */
+        .hero-contact {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2.5rem 0 1.5rem;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+        .hero-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #f0e6d0;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .hero-contact-item i {
+            font-size: 1.3rem;
+            color: var(--gold);
+        }
+        .hero-contact-item a {
+            color: #f0e6d0;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .hero-contact-item a:hover {
+            color: var(--gold);
+        }
+        .hero .btn-primary {
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+            margin-top: 0.5rem;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            position: relative;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--gold);
+            margin: 0.8rem auto 0;
+            border-radius: 2px;
+        }
+        .section-sub {
+            text-align: center;
+            color: var(--gray-text);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Contact Grid (below hero) */
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            margin: 4rem 0;
+        }
+        .contact-info {
+            flex: 1;
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #efebe3;
+            transition: var(--transition);
+        }
+        .contact-info:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gold);
+        }
+        .contact-info h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--navy);
+        }
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .contact-detail i {
+            font-size: 1.5rem;
+            color: var(--gold);
+            width: 2rem;
+            margin-top: 0.2rem;
+        }
+        .contact-detail h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--navy);
+        }
+        .contact-detail p {
+            color: var(--gray-text);
+        }
+        .contact-form {
+            flex: 1.5;
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #efebe3;
+            transition: var(--transition);
+        }
+        .contact-form:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gold);
+        }
+        .contact-form h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--navy);
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 2px solid #e2dcd0;
+            border-radius: 24px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            background: #fefcf9;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 16px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .success-message.show {
+            display: block;
+        }
+
+        /* Map Section - exact location matching hero address */
+        .map-section {
+            margin: 4rem 0;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        .map-section iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            display: block;
+        }
+
+        /* FAQ Section */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .faq-card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid #efebe3;
+            box-shadow: var(--shadow-sm);
+        }
+        .faq-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-md);
+        }
+        .faq-card h3 {
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .faq-card p {
+            color: var(--gray-text);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .footer-brand h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--gold);
+        }
+        .footer-links ul {
+            list-style: none;
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: #ccc2a8;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+        .footer-contact span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            color: #ccc2a8;
+        }
+        .footer-contact i {
+            color: var(--gold);
+        }
+        .footer-copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        @media (max-width: 850px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: var(--cream);
+                backdrop-filter: blur(12px);
+                padding: 1.5rem 0;
+                gap: 1rem;
+                text-align: center;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero-contact {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            .container {
+                padding: 0 1.2rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo {
+                gap: 0.6rem;
+            }
+            .logo-img {
+                height: 55px;
+            }
+            .logo-main {
+                font-size: 1.2rem;
+            }
+            .contact-grid {
+                flex-direction: column;
+            }
+            body {
+                cursor: auto;
+            }
+            .cursor-dot, .cursor-outline {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Hero Background Animation -->
+    <div class="hero-bg">
+        <div class="circle" style="width: 350px; height: 350px; top: 10%; left: -5%;"></div>
+        <div class="circle" style="width: 500px; height: 500px; bottom: -10%; right: -10%; animation-duration: 18s;"></div>
+        <div class="circle" style="width: 200px; height: 200px; top: 60%; left: 70%; animation-duration: 10s;"></div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img class="logo-img" src="logo.png" alt="GR ASSOCIATES Logo" onerror="this.src='https://placehold.co/70x70?text=GR'">
+                <div class="logo-text">
+                    <div class="logo-main">
+                        <span class="gr">GR</span> <span class="associates">ASSOCIATES</span>
+                    </div>
+                    <div class="logo-tagline">
+                        CIVIL & INTERIOR
+                    </div>
+                </div>
+            </div>
+            <div class="menu-toggle" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html" class="active">Contact Us</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section – with contact details inside, location link fixed -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Let's Build Together</h1>
+            <p>Reach out for consultations, quotes, or project inquiries — we're here to help bring your vision to life</p>
+            <div class="hero-contact">
+                <div class="hero-contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <a href="tel:+919980053759">+91 99800 53759</a>
+                </div>
+                <div class="hero-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:contact@grassociates.com">contact@grassociates.com</a>
+                </div>
+                <div class="hero-contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <a href="https://wa.me/919980053759?text=Hello%20GR%20ASSOCIATES%2C%20I%20would%20like%20to%20inquire%20about%20a%20project" target="_blank">WhatsApp</a>
+                </div>
+                <div class="hero-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <a href="https://maps.google.com/?q=GR+Associates+2nd+floor+31%2FA+80+Feet+Rd+Chandra+Layout+Nagarbhavi+Bengaluru+560040" target="_blank">Location</a>
+                </div>
+            </div>
+            <a href="#contact-form" class="btn-primary">Get in Touch <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Contact Section (form + detailed info) -->
+    <div class="container" data-aos="fade-up" data-aos-duration="800" id="contact-form">
+        <div class="contact-grid">
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <div class="contact-detail">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <h3>Phone Number</h3>
+                        <p><a href="tel:+919980053759" style="color: var(--gray-text); text-decoration: none;">+91 99800 53759</a></p>
+                        <p style="font-size: 0.8rem; margin-top: 0.2rem;">Mon-Sat: 10:00 AM – 7:00 PM</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h3>Email Address</h3>
+                        <p><a href="mailto:contact@grassociates.com" style="color: var(--gray-text); text-decoration: none;">contact@grassociates.com</a></p>
+                        <p style="font-size: 0.8rem; margin-top: 0.2rem;">We respond within 24 hours</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>
+                        <h3>WhatsApp</h3>
+                        <p><a href="https://wa.me/919980053759?text=Hello%20GR%20ASSOCIATES%2C%20I%20would%20like%20to%20inquire%20about%20a%20project" target="_blank" style="color: var(--gray-text); text-decoration: none;">+91 99800 53759</a></p>
+                        <p style="font-size: 0.8rem; margin-top: 0.2rem;">Click to chat on WhatsApp</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h3>Head Office</h3>
+                        <p>GR Associates, 2nd floor, 31/A, 80 Feet Rd, Chandra Layout, Nagarbhavi 1st Stage, 3rd Stage, Chandra Layout, Bengaluru, Karnataka 560040</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h3>Working Hours</h3>
+                        <p>Monday – Saturday: 10:00 AM – 7:00 PM<br>Sunday: Closed</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h2>Send Us a Message</h2>
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullname">Full Name *</label>
+                            <input type="text" id="fullname" name="fullname" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="you@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="project-inquiry">Project Inquiry</option>
+                            <option value="quote-request">Quote Request</option>
+                            <option value="careers">Careers / Partnership</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message *</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Tell us about your project, requirements, or any questions..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
+                    <div class="success-message" id="successMessage">
+                        <i class="fas fa-check-circle"></i> Thank you! Your message has been sent. We'll get back to you within 24 hours.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Section – Exact same location as mentioned in hero page and office address -->
+    <div class="container" data-aos="fade-up" data-aos-duration="800">
+        <div class="map-section">
+            <!-- Google Maps embed showing GR ASSOCIATES exact address: 2nd floor, 31/A, 80 Feet Rd, Chandra Layout, Nagarbhavi, Bengaluru -->
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.1586187014495!2d77.52544071512908!3d12.953179686895187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3e1d5e9e5f5b%3A0x1d4b5b6b5b6b5b6b!2sGR%20Associates!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="GR ASSOCIATES Office Location - Chandra Layout, Bengaluru">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="container" data-aos="fade-up" data-aos-duration="800">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-sub">Got questions? We have answers.</p>
+        <div class="faq-grid">
+            <div class="faq-card">
+                <h3><i class="fas fa-clock"></i> How quickly can you start?</h3>
+                <p>We typically begin within 2-3 weeks after project agreement and initial planning phase. Timeline depends on project complexity and approvals.</p>
+            </div>
+            <div class="faq-card">
+                <h3><i class="fas fa-shield-alt"></i> Are you licensed and insured?</h3>
+                <p>Absolutely. GR ASSOCIATES is fully licensed, bonded, and insured for all types of construction projects across Karnataka.</p>
+            </div>
+            <div class="faq-card">
+                <h3><i class="fas fa-city"></i> What areas do you serve?</h3>
+                <p>We serve major cities including All Over Karnataka, Hyderabad, Coimbatore, Chennai, and surrounding regions.</p>
+            </div>
+            <div class="faq-card">
+                <h3><i class="fas fa-tools"></i> Do you handle both residential and commercial?</h3>
+                <p>Yes, we specialize in residential, commercial, industrial, and institutional projects of all scales.</p>
+            </div>
+            <div class="faq-card">
+                <h3><i class="fas fa-file-signature"></i> What's the process to get started?</h3>
+                <p>Simply fill out the contact form or call us. We'll schedule a consultation, understand your requirements, and provide a detailed proposal.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Banner (Emergency Support) -->
+    <div class="container" data-aos="zoom-in">
+        <div class="cta-section" style="background: linear-gradient(135deg, var(--navy), #030e1a); border-radius: 48px; padding: 2.5rem; text-align: center; margin: 2rem 0 4rem; border: 1px solid rgba(212, 175, 55, 0.3); position: relative; overflow: hidden; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.3);">
+            <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212,175,55,0.1), transparent); animation: rotate 20s linear infinite; z-index: 0;"></div>
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: slide 3s ease-in-out infinite;"></div>
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #f0e6d0; position: relative; z-index: 1;">Emergency Support?</h3>
+            <p style="color: #ccc2a8; position: relative; z-index: 1; margin-bottom: 1rem;">For urgent project needs, call us directly on our emergency helpline</p>
+            <a href="tel:+919980053759" class="btn-primary" style="position: relative; z-index: 1;"><i class="fas fa-phone-alt"></i> +91 99800 53759</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>GR ASSOCIATES</h3>
+                <p>Reliable contracting partner since 2026</p>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <span><i class="fas fa-phone-alt"></i> +91 99800 53759</span>
+                <span><i class="fas fa-envelope"></i> contact@grassociates.com</span>
+                <span><i class="fas fa-map-marker-alt"></i> Bengaluru</span>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2026 GR ASSOCIATES — Built with integrity and precision. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 100 });
+
+        // Sticky navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // Mobile menu
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', () => navLinks.classList.toggle('show'));
+        }
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const fullname = document.getElementById('fullname').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                if (!fullname || !email || !subject || !message) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                successMessage.classList.add('show');
+                contactForm.reset();
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+            });
+        }
+
+        // Custom cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        if (cursorDot && cursorOutline) {
+            window.addEventListener('mousemove', function(e) {
+                cursorDot.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
+                cursorOutline.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
+            });
+            const interactiveElements = document.querySelectorAll('a, button, .btn-primary, .contact-info, .contact-form, .faq-card, .hero-contact-item');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => { cursorDot.classList.add('hover'); cursorOutline.classList.add('hover'); });
+                el.addEventListener('mouseleave', () => { cursorDot.classList.remove('hover'); cursorOutline.classList.remove('hover'); });
+            });
+        }
+    </script>
+</body>
+</html>
