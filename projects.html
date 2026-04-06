@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>GR ASSOCIATES | Projects – Building the Future</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS (Animate on Scroll) Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fef8ed;
+            color: #1e2a47;
+            line-height: 1.5;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        :root {
+            --gold: #d4af37;
+            --gold-dark: #b28b2c;
+            --navy: #0a192f;
+            --cream: #fdf8ed;
+            --cream-dark: #f5efdf;
+            --gray-text: #4a5568;
+            --shadow-sm: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+            --shadow-md: 0 20px 30px -12px rgba(0,0,0,0.1);
+            --transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.15s ease-out;
+            backdrop-filter: blur(2px);
+        }
+        .cursor-dot.hover, .cursor-outline.hover {
+            transform: scale(1.5);
+            background-color: var(--gold-dark);
+            border-color: var(--gold-dark);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--cream-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(253, 248, 237, 0.96);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 0.8rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(253, 248, 237, 0.98);
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+        .logo-img {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .logo-img:hover {
+            transform: scale(1.02);
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .logo-main {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .logo-main .gr {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo-main .associates {
+            color: var(--navy);
+        }
+        .logo-tagline {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--navy);
+            text-transform: uppercase;
+            margin-top: 2px;
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            font-weight: 500;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--navy);
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+            position: relative;
+        }
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover:after,
+        .nav-links a.active:after {
+            width: 100%;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--navy);
+        }
+
+        .btn-primary {
+            background: linear-gradient(105deg, var(--gold), var(--gold-dark));
+            color: var(--navy);
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 0;
+        }
+        .hero-slides {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: opacity 1.2s ease-in-out;
+            opacity: 0;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 6rem 1rem;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff, var(--gold), #ffdf8c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #e0d6c0;
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 15;
+        }
+        .slide-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .slide-dot.active {
+            background: var(--gold);
+            transform: scale(1.3);
+            box-shadow: 0 0 8px var(--gold);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            position: relative;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--gold);
+            margin: 0.8rem auto 0;
+            border-radius: 2px;
+        }
+        .section-sub {
+            text-align: center;
+            color: var(--gray-text);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .project-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid #efebe3;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            position: relative;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-md);
+        }
+        .project-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .video-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .video-badge i {
+            color: var(--gold);
+        }
+        .status-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .status-badge.ongoing {
+            background: #e67e22;
+            color: white;
+        }
+        .status-badge.completed {
+            background: #27ae60;
+            color: white;
+        }
+        .project-content {
+            padding: 1.5rem;
+        }
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .project-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gold);
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+        .project-desc {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .project-link {
+            color: var(--gold);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.2s;
+        }
+        .project-link:hover {
+            gap: 0.8rem;
+        }
+
+        /* Lightbox Modal with mixed media support */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            background: var(--cream);
+            border-radius: 28px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            cursor: default;
+            width: 900px;
+        }
+        .lightbox-gallery {
+            position: relative;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            min-height: 400px;
+            background: #1a1a1a;
+        }
+        .media-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            cursor: grab;
+            background: #000;
+            min-height: 55vh;
+        }
+        .media-container:active {
+            cursor: grabbing;
+        }
+        .lightbox-media {
+            max-width: 100%;
+            max-height: 55vh;
+            object-fit: contain;
+            transition: transform 0.2s ease;
+            transform-origin: center center;
+        }
+        .lightbox-media.zoomed {
+            transform: scale(2);
+            cursor: zoom-out;
+        }
+        video.lightbox-media {
+            cursor: default;
+            background: black;
+        }
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 10;
+        }
+        .gallery-nav:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .gallery-prev { left: 15px; }
+        .gallery-next { right: 15px; }
+        .media-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            z-index: 10;
+        }
+        .zoom-btn, .reset-zoom-btn {
+            position: absolute;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 10;
+            font-size: 1rem;
+        }
+        .zoom-btn { top: 15px; left: 15px; }
+        .reset-zoom-btn { top: 15px; left: 60px; display: none; }
+        .reset-zoom-btn.show { display: flex; }
+        .zoom-btn:hover, .reset-zoom-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .lightbox-details {
+            padding: 1.5rem;
+            background: var(--cream);
+        }
+        .lightbox-details h3 {
+            font-size: 1.5rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .lightbox-details .lightbox-location {
+            color: var(--gold);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .lightbox-details .lightbox-desc {
+            color: var(--gray-text);
+            margin-bottom: 1rem;
+        }
+        .lightbox-details .lightbox-status {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .lightbox-details .lightbox-status.ongoing { background: #e67e22; color: white; }
+        .lightbox-details .lightbox-status.completed { background: #27ae60; color: white; }
+        .close-lightbox {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            z-index: 20;
+        }
+        .close-lightbox:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .footer-brand h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--gold);
+        }
+        .footer-links ul {
+            list-style: none;
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: #ccc2a8;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-contact span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            color: #ccc2a8;
+        }
+        .footer-contact i { color: var(--gold); }
+        .footer-copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        @media (max-width: 850px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: var(--cream);
+                backdrop-filter: blur(12px);
+                padding: 1.5rem 0;
+                gap: 1rem;
+                text-align: center;
+            }
+            .nav-links.show { display: flex; }
+            .menu-toggle { display: block; }
+            .hero h1 { font-size: 2.5rem; }
+            .container { padding: 0 1.2rem; }
+            .footer-content { flex-direction: column; text-align: center; }
+            .logo-img { height: 55px; }
+            .cursor-dot, .cursor-outline { display: none; }
+            body { cursor: auto; }
+            .gallery-nav { width: 30px; height: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img class="logo-img" src="logo.png" alt="GR ASSOCIATES Logo" onerror="this.src='https://placehold.co/70x70?text=GR'">
+                <div class="logo-text">
+                    <div class="logo-main"><span class="gr">GR</span> <span class="associates">ASSOCIATES</span></div>
+                    <div class="logo-tagline">CIVIL & INTERIOR</div>
+                </div>
+            </div>
+            <div class="menu-toggle" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Slideshow -->
+    <section class="hero">
+        <div class="hero-slides">
+            <div class="hero-slide active" style="background-image: url('image18.jpeg');"></div>
+            <div class="hero-slide" style="background-image: url('image11.jpeg');"></div>
+            <div class="hero-slide" style="background-image: url('image10.jpeg');"></div>
+            <div class="hero-slide" style="background-image: url('image15.jpeg');"></div>
+            <div class="hero-slide" style="background-image: url('image3.jpeg');"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Our Projects</h1>
+            <p>Transforming visions into landmarks — explore our journey of excellence</p>
+        </div>
+        <div class="slide-indicator"><div class="slide-dot active" data-slide="0"></div><div class="slide-dot" data-slide="1"></div><div class="slide-dot" data-slide="2"></div><div class="slide-dot" data-slide="3"></div><div class="slide-dot" data-slide="4"></div></div>
+    </section>
+
+    <!-- Ongoing Projects (4 projects total) -->
+    <div class="container" data-aos="fade-up">
+        <h2 class="section-title">Ongoing Projects</h2>
+        <p class="section-sub">Currently shaping the future</p>
+        <div class="projects-grid" id="ongoingGrid">
+            <!-- Project 1: Chitradurga (with video + 2 images) -->
+            <div class="project-card" data-title="Chitradurga" data-location="Chitradurga, Karnataka" data-desc="Ongoing project spanning 6 lakh sq. ft., delivering large-scale development with modern design, quality construction, and timely execution. Includes video walkthrough." data-status="ongoing" data-images="video3.mp4,image31.jpeg,image32.jpeg,chit1.jpeg,chit2.jpeg,chit3.jpeg,chit4.jpeg">
+                <div class="project-img" style="background-image: url('image30.jpeg'); background-size: cover;">
+                    <div class="status-badge ongoing">Ongoing</div>
+                    <div class="video-badge"><i class="fas fa-video"></i> Video Walkthrough</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Chitradurga</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Chitradurga, Karnataka</div>
+                    <p class="project-desc">Ongoing project spanning 6 lakh sq. ft., delivering large-scale development with modern design, quality construction, and timely execution.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 2: Villa project (1 image only) -->
+            <div class="project-card" data-title="Villa project" data-location="Airport Road, Bangalore" data-desc="Ongoing villa project spanning 3.5 lakh sq. ft., delivering premium design, luxury living, and high-quality construction." data-status="ongoing" data-images="inprogress.jpeg">
+                <div class="project-img" style="background-image: url('inprogress.jpeg'); background-size: cover;">
+                    <div class="status-badge ongoing">Ongoing</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Villa project</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Airport Road, Bangalore</div>
+                    <p class="project-desc">Ongoing villa project spanning 3.5 lakh sq. ft., delivering premium design, luxury living, and high-quality construction.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- NEW Project 3: Lakeside Towers (4 photos) -->
+            <div class="project-card" data-title="hardscape" data-location="Whitefield, Bangalore" data-desc="Ongoing hardscape work project at Bellahalli Cross, Thanisandra, delivering premium outdoor development with durable materials and quality execution." data-status="ongoing" data-images="photo1.jpeg,photo2.jpeg,photo3.jpeg,photo4.jpeg">
+                <div class="project-img" style="background-image: url('photo1.jpeg'); background-size: cover;">
+                    <div class="status-badge ongoing">Ongoing</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">hardscape</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Bellahalli Cross, Thanisandra</div>
+                    <p class="project-desc">Ongoing hardscape work project at Bellahalli Cross, Thanisandra, delivering premium outdoor development with durable materials and quality execution.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- NEW Project 4: Tech Park Phase 2 (4 photos) -->
+            <div class="project-card" data-title="Kondenahalli, Karnataka" data-location="Ongoing tech park apartment project, delivering modern design, quality construction, and timely execution." data-status="ongoing" data-images="photo5.jpeg,photo6.jpeg,photo7.jpeg,photo8.jpeg">
+                <div class="project-img" style="background-image: url('photo5.jpeg'); background-size: cover;">
+                    <div class="status-badge ongoing">Ongoing</div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Tech Park</h3>
+                    <div class="project-location"><i class="fas fa-map-marker-alt"></i> Kondenahalli, Karnataka</div>
+                    <p class="project-desc">Ongoing tech park apartment project, delivering modern design, quality construction, and timely execution.</p>
+                    <a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completed Projects (15 projects - same as before, truncated for brevity but fully functional) -->
+    <div class="container" data-aos="fade-up">
+        <h2 class="section-title">Completed Projects</h2>
+        <p class="section-sub">Delivering excellence, one project at a time</p>
+        <div class="projects-grid" id="completedGrid">
+            <div class="project-card" data-title="Online instrument" data-location="Mahadevpura, Bangalore" data-desc="Successfully completed a premium residential apartment project in Mahadevpura in 2010." data-status="completed" data-images="image1.jpeg,image6.jpeg"><div class="project-img" style="background-image: url('image1.jpeg');"><div class="status-badge completed">Completed 2010</div></div><div class="project-content"><h3 class="project-title">Online instrument</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Mahadevpura, Bangalore</div><p class="project-desc">Successfully completed a premium residential apartment project in Mahadevpura in 2010.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="Mosque" data-location="Chikmagalur, Karnataka" data-desc="Successfully completed a mosque project in Chikmagalur in 2014." data-status="completed" data-images="image2.jpeg,image7.jpeg"><div class="project-img" style="background-image: url('image2.jpeg');"><div class="status-badge completed">Completed 2014</div></div><div class="project-content"><h3 class="project-title">Mosque</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i>Chikmagalur, Karnataka</div><p class="project-desc">Successfully completed a mosque project in Chikmagalur in 2014.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="Electronic City" data-location="Electronic City, Karnataka" data-desc="Successfully completed a commercial glass-structured building in Electronic City in 2012." data-status="completed" data-images="image3.jpeg,image8.jpeg"><div class="project-img" style="background-image: url('image3.jpeg');"><div class="status-badge completed">Completed 2012</div></div><div class="project-content"><h3 class="project-title">Electronic City</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Electronic City, Karnataka</div><p class="project-desc">Successfully completed a commercial glass-structured building in Electronic City in 2012.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="Super Speciality Hospital" data-location="Rajajinagar, Karnataka" data-desc="Successfully completed a super speciality hospital façade project." data-status="completed" data-images="image4.jpeg,image9.jpeg"><div class="project-img" style="background-image: url('image4.jpeg');"><div class="status-badge completed">Completed 2013</div></div><div class="project-content"><h3 class="project-title">Super Speciality Hospital</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Rajajinagar, Karnataka</div><p class="project-desc">Successfully completed a super speciality hospital façade project.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="RV college vip lounge" data-location="RV College, Karnataka" data-desc="Successfully completed the VIP lounge project at RV College." data-status="completed" data-images="image5.jpeg,image10.jpeg"><div class="project-img" style="background-image: url('image5.jpeg');"><div class="status-badge completed">Completed 2022</div></div><div class="project-content"><h3 class="project-title">RV college vip lounge</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> RV College, Karnataka</div><p class="project-desc">Successfully completed the VIP lounge project at RV College.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="Beer Library" data-location="Koramangala, Bangalore" data-desc="Successfully completed The Beer Library project in Koramangala in 2016." data-status="completed" data-images="image11.jpeg"><div class="project-img" style="background-image: url('image11.jpeg');"><div class="status-badge completed">Completed 2016</div></div><div class="project-content"><h3 class="project-title">Beer Library</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Koramangala, Bangalore</div><p class="project-desc">Successfully completed The Beer Library project in Koramangala in 2016.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="Mahalaxmi Layout" data-location="Mahalaxmi Layout, Bangalore" data-desc="Successfully completed a residential building project in Mahalaxmi Layout in 2019." data-status="completed" data-images="image13.jpeg,image12.jpeg"><div class="project-img" style="background-image: url('image13.jpeg');"><div class="status-badge completed">Completed 2019</div></div><div class="project-content"><h3 class="project-title">Mahalaxmi Layout</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Mahalaxmi Layout, Bangalore</div><p class="project-desc">Successfully completed a residential building project in Mahalaxmi Layout in 2019.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="CMR University, cricket stadium" data-location="CMR University, Bangalore" data-desc="Successfully completed the cricket stadium project at CMR University in 2022." data-status="completed" data-images="image15.jpeg,image14.jpeg"><div class="project-img" style="background-image: url('image15.jpeg');"><div class="status-badge completed">Completed 2022</div></div><div class="project-content"><h3 class="project-title">CMR University, cricket stadium</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> CMR University, Bangalore</div><p class="project-desc">Successfully completed the cricket stadium project at CMR University in 2022.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="Hosakerehalli" data-location="Hosakerehalli, Bangalore" data-desc="Successfully completed a residential building project in Hosakerehalli in 2021." data-status="completed" data-images="image17.jpeg,image16.jpeg"><div class="project-img" style="background-image: url('image17.jpeg');"><div class="status-badge completed">Completed 2021</div></div><div class="project-content"><h3 class="project-title">Hosakerehalli</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Hosakerehalli, Bangalore</div><p class="project-desc">Successfully completed a residential building project in Hosakerehalli in 2021.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="farmhouse" data-location="Maddur, Karnataka" data-desc="Successfully completed a farmhouse project in Maddur in 2006." data-status="completed" data-images="image18.jpeg,image19.jpeg"><div class="project-img" style="background-image: url('image18.jpeg');"><div class="status-badge completed">Completed 2006</div></div><div class="project-content"><h3 class="project-title">farmhouse</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Maddur, Karnataka</div><p class="project-desc">Successfully completed a farmhouse project in Maddur in 2006.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="farmhouse project in Madugiri" data-location="Madugiri, Tumakuru" data-desc="Successfully completed a farmhouse project in Madugiri, Tumakuru in 2020." data-status="completed" data-images="image20.jpeg,image21.jpeg"><div class="project-img" style="background-image: url('image20.jpeg');"><div class="status-badge completed">Completed 2020</div></div><div class="project-content"><h3 class="project-title">farmhouse project in Madugiri</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Madugiri, Tumakuru</div><p class="project-desc">Successfully completed a farmhouse project in Madugiri, Tumakuru in 2020.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="VIP lounge" data-location="RV College, Karnataka" data-desc="Successfully completed the VIP lounge project at RV College in 2018." data-status="completed" data-images="image22.jpeg,image23.jpeg"><div class="project-img" style="background-image: url('image22.jpeg');"><div class="status-badge completed">Completed 2018</div></div><div class="project-content"><h3 class="project-title">VIP lounge</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> RV College, Karnataka</div><p class="project-desc">Successfully completed the VIP lounge project at RV College in 2018.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="farmhouse project in Doddaballapura" data-location="Doddaballapura, Karnataka" data-desc="Successfully completed a farmhouse project in Doddaballapura in 2015." data-status="completed" data-images="image26.jpeg,image27.jpeg"><div class="project-img" style="background-image: url('image26.jpeg');"><div class="status-badge completed">Completed 2015</div></div><div class="project-content"><h3 class="project-title">farmhouse project in Doddaballapura</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Doddaballapura, Karnataka</div><p class="project-desc">Successfully completed a farmhouse project in Doddaballapura in 2015.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="Ambika Apartment" data-location="Sarakki, Karnataka" data-desc="Successfully completed Ambika Apartment project in Sarakki in 2012." data-status="completed" data-images="image28.jpeg,image29.jpeg"><div class="project-img" style="background-image: url('image28.jpeg');"><div class="status-badge completed">Completed 2012</div></div><div class="project-content"><h3 class="project-title">Ambika Apartment</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Sarakki, Karnataka</div><p class="project-desc">Successfully completed Ambika Apartment project in Sarakki in 2012.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+            <div class="project-card" data-title="Jmc projects" data-location="Whitefield, Bangalore" data-desc="Successfully completed JMC Projects in Whitefield in 2016." data-status="completed" data-images="image24.jpeg,image25.jpeg"><div class="project-img" style="background-image: url('image24.jpeg');"><div class="status-badge completed">Completed 2016</div></div><div class="project-content"><h3 class="project-title">Jmc projects</h3><div class="project-location"><i class="fas fa-map-marker-alt"></i> Whitefield, Bangalore</div><p class="project-desc">Successfully completed JMC Projects in Whitefield in 2016.</p><a href="#" class="project-link">View Details <i class="fas fa-arrow-right"></i></a></div></div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container" data-aos="zoom-in"><div class="cta-section" style="background: linear-gradient(135deg, var(--navy), #030e1a); border-radius: 48px; padding: 3rem; text-align: center; margin: 4rem 0;"><h3 style="font-size: 2.2rem; color: #f0e6d0;">Have a Project in Mind?</h3><p style="color: #ccc2a8;">Let's discuss how we can bring your vision to life.</p><a href="contact.html" class="btn-primary" style="margin-top: 1rem;">Contact Us <i class="fas fa-arrow-right"></i></a></div></div>
+
+    <footer><div class="footer-content"><div class="footer-brand"><h3>GR ASSOCIATES</h3><p>Reliable contracting partner since 2026</p></div><div class="footer-links"><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="projects.html">Projects</a></li><li><a href="contact.html">Contact</a></li></ul></div><div class="footer-contact"><span><i class="fas fa-phone-alt"></i> +91 99800 53759</span><span><i class="fas fa-envelope"></i> contact@grassociates.org</span><span><i class="fas fa-map-marker-alt"></i>Bangalore</span></div></div><div class="footer-copyright"><p>© 2026 GR ASSOCIATES — Built with integrity and precision.</p></div></footer>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox"><div class="lightbox-content"><span class="close-lightbox">&times;</span><div class="lightbox-gallery"><div class="gallery-nav gallery-prev"><i class="fas fa-chevron-left"></i></div><div class="media-container" id="mediaContainer"></div><div class="gallery-nav gallery-next"><i class="fas fa-chevron-right"></i></div><div class="zoom-btn" id="zoomBtn"><i class="fas fa-search-plus"></i></div><div class="reset-zoom-btn" id="resetZoomBtn"><i class="fas fa-undo-alt"></i></div><div class="media-counter" id="mediaCounter">1 / 1</div></div><div class="lightbox-details"><h3 id="lightboxTitle"></h3><div class="lightbox-location"><i class="fas fa-map-marker-alt"></i> <span id="lightboxLocationSpan"></span></div><p class="lightbox-desc" id="lightboxDesc"></p><span class="lightbox-status" id="lightboxStatus"></span></div></div></div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 100 });
+        // Navbar scroll & mobile menu
+        window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50));
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('show'));
+        // Hero slideshow
+        let slides = document.querySelectorAll('.hero-slide'), dots = document.querySelectorAll('.slide-dot'), currentSlide = 0, slideInterval;
+        function showSlide(i) { slides.forEach((s, idx) => s.classList.toggle('active', idx === i)); dots.forEach((d, idx) => d.classList.toggle('active', idx === i)); currentSlide = i; }
+        function nextSlide() { showSlide((currentSlide + 1) % slides.length); }
+        function startSlideshow() { if (slideInterval) clearInterval(slideInterval); slideInterval = setInterval(nextSlide, 5000); }
+        dots.forEach((d, i) => d.addEventListener('click', () => { showSlide(i); startSlideshow(); }));
+        startSlideshow();
+
+        // LIGHTBOX WITH AUTO-PLAY & LOOP FOR VIDEOS
+        const lightbox = document.getElementById('lightbox');
+        const mediaContainer = document.getElementById('mediaContainer');
+        const zoomBtn = document.getElementById('zoomBtn');
+        const resetZoomBtn = document.getElementById('resetZoomBtn');
+        const prevBtn = document.querySelector('.gallery-prev');
+        const nextBtn = document.querySelector('.gallery-next');
+        const closeLightbox = document.querySelector('.close-lightbox');
+        const mediaCounterSpan = document.getElementById('mediaCounter');
+        let currentMediaList = [];
+        let currentMediaIndex = 0;
+        let currentMediaElement = null;
+        let isZoomed = false;
+
+        function resetZoomUI() { if (currentMediaElement && currentMediaElement.tagName === 'IMG') { currentMediaElement.classList.remove('zoomed'); isZoomed = false; resetZoomBtn.classList.remove('show'); mediaContainer.style.overflow = 'auto'; mediaContainer.style.cursor = 'grab'; } }
+        function toggleZoom() { if (!currentMediaElement || currentMediaElement.tagName !== 'IMG') return; if (!isZoomed) { currentMediaElement.classList.add('zoomed'); isZoomed = true; resetZoomBtn.classList.add('show'); mediaContainer.style.overflow = 'auto'; } else { resetZoomUI(); } }
+        function updateZoomControlsVisibility() { const isImage = currentMediaElement && currentMediaElement.tagName === 'IMG'; zoomBtn.style.display = isImage ? 'flex' : 'none'; if (!isImage) resetZoomBtn.classList.remove('show'); else if (isZoomed) resetZoomBtn.classList.add('show'); else resetZoomBtn.classList.remove('show'); }
+
+        function pauseAnyVideo() {
+            const existingVideo = mediaContainer.querySelector('video');
+            if (existingVideo) { existingVideo.pause(); existingVideo.currentTime = 0; }
+        }
+
+        function loadMedia(fileUrl, index) {
+            resetZoomUI();
+            pauseAnyVideo();
+            mediaContainer.innerHTML = '';
+            const isVideo = fileUrl.toLowerCase().endsWith('.mp4') || fileUrl.toLowerCase().endsWith('.webm') || fileUrl.toLowerCase().endsWith('.mov');
+            if (isVideo) {
+                const video = document.createElement('video');
+                video.className = 'lightbox-media';
+                video.controls = true;
+                video.autoplay = true;
+                video.loop = true;
+                video.muted = true;
+                video.playsInline = true;
+                video.preload = 'auto';
+                const source = document.createElement('source');
+                source.src = fileUrl;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                video.addEventListener('canplaythrough', () => { video.play().catch(e => console.log("Autoplay prevented")); });
+                mediaContainer.appendChild(video);
+                currentMediaElement = video;
+            } else {
+                const img = document.createElement('img');
+                img.src = fileUrl;
+                img.className = 'lightbox-media';
+                img.alt = 'Project visual';
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '55vh';
+                mediaContainer.appendChild(img);
+                currentMediaElement = img;
+            }
+            updateZoomControlsVisibility();
+            mediaCounterSpan.textContent = `${index+1} / ${currentMediaList.length}`;
+        }
+
+        function updateLightbox(projectCard) {
+            const title = projectCard.getAttribute('data-title');
+            const location = projectCard.getAttribute('data-location');
+            const desc = projectCard.getAttribute('data-desc');
+            const status = projectCard.getAttribute('data-status');
+            const imagesStr = projectCard.getAttribute('data-images');
+            currentMediaList = imagesStr.split(',').map(s => s.trim());
+            currentMediaIndex = 0;
+            document.getElementById('lightboxTitle').textContent = title;
+            document.getElementById('lightboxLocationSpan').textContent = location;
+            document.getElementById('lightboxDesc').textContent = desc;
+            const statusSpan = document.getElementById('lightboxStatus');
+            statusSpan.textContent = status === 'ongoing' ? 'Ongoing' : 'Completed';
+            statusSpan.className = 'lightbox-status';
+            statusSpan.classList.add(status === 'ongoing' ? 'ongoing' : 'completed');
+            loadMedia(currentMediaList[0], 0);
+        }
+
+        function openLightbox(card) { updateLightbox(card); lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeLightboxFunc() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            pauseAnyVideo();
+            resetZoomUI();
+        }
+
+        document.querySelectorAll('.project-card').forEach(card => card.addEventListener('click', (e) => { if (!e.target.closest('.project-link')) openLightbox(card); }));
+        prevBtn.addEventListener('click', (e) => { e.stopPropagation(); if (currentMediaList.length) { currentMediaIndex = (currentMediaIndex - 1 + currentMediaList.length) % currentMediaList.length; loadMedia(currentMediaList[currentMediaIndex], currentMediaIndex); } });
+        nextBtn.addEventListener('click', (e) => { e.stopPropagation(); if (currentMediaList.length) { currentMediaIndex = (currentMediaIndex + 1) % currentMediaList.length; loadMedia(currentMediaList[currentMediaIndex], currentMediaIndex); } });
+        zoomBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleZoom(); });
+        resetZoomBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoomUI(); });
+        if (mediaContainer) mediaContainer.addEventListener('dblclick', () => toggleZoom());
+        closeLightbox.addEventListener('click', closeLightboxFunc);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightboxFunc(); });
+        document.addEventListener('keydown', (e) => { if (lightbox.classList.contains('active')) { if (e.key === 'Escape') closeLightboxFunc(); if (e.key === 'ArrowLeft') prevBtn.click(); if (e.key === 'ArrowRight') nextBtn.click(); } });
+
+        // Panning for zoomed images
+        let isPanning = false, startX, startY, scrollLeft, scrollTop;
+        mediaContainer.addEventListener('mousedown', (e) => { if (isZoomed && currentMediaElement?.tagName === 'IMG') { isPanning = true; startX = e.clientX; startY = e.clientY; scrollLeft = mediaContainer.scrollLeft; scrollTop = mediaContainer.scrollTop; mediaContainer.style.cursor = 'grabbing'; e.preventDefault(); } });
+        window.addEventListener('mousemove', (e) => { if (isPanning) { const dx = e.clientX - startX, dy = e.clientY - startY; mediaContainer.scrollLeft = scrollLeft - dx; mediaContainer.scrollTop = scrollTop - dy; } });
+        window.addEventListener('mouseup', () => { if (isPanning) { isPanning = false; if (mediaContainer) mediaContainer.style.cursor = 'grab'; } });
+
+        // Custom cursor
+        const cursorDot = document.querySelector('.cursor-dot'), cursorOutline = document.querySelector('.cursor-outline');
+        if (cursorDot && cursorOutline) {
+            window.addEventListener('mousemove', (e) => { cursorDot.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`; cursorOutline.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`; });
+            document.querySelectorAll('a, button, .btn-primary, .project-card, .slide-dot, .gallery-nav, .zoom-btn, .reset-zoom-btn').forEach(el => { el.addEventListener('mouseenter', () => { cursorDot.classList.add('hover'); cursorOutline.classList.add('hover'); }); el.addEventListener('mouseleave', () => { cursorDot.classList.remove('hover'); cursorOutline.classList.remove('hover'); }); });
+        }
+    </script>
+</body>
+</html>
